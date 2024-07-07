@@ -32,7 +32,7 @@ const ExpenseForm = ({ expense, onSubmit }: Props) => {
   return (
     <form
       onSubmit={handleSubmit((data) =>
-        onSubmit({ id: expense[expense.length - 1].id + 1, ...data })
+        onSubmit({ id: expense[expense.length - 1].id + 1 || 0, ...data })
       )}
     >
       <div className="mb-3">
