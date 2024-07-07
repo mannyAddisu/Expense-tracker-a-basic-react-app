@@ -26,14 +26,17 @@ const ExpenseForm = ({ expense, onSubmit }: Props) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm<FormField>({ resolver: zodResolver(schema) });
 
   return (
     <form
-      onSubmit={handleSubmit((data) =>
-        onSubmit({ id: expense[expense.length - 1].id + 1 || 0, ...data })
-      )}
+      onSubmit={handleSubmit((data) => {
+        if (expense.length === 0) onSubmit({ id: 0, ...data });
+        else onSubmit({ id: expense[expense.length - 1].id + 1, ...data });
+        reset();
+      })}
     >
       <div className="mb-3">
         <label htmlFor="description" className="form-label">
@@ -77,7 +80,7 @@ const ExpenseForm = ({ expense, onSubmit }: Props) => {
         </select>
         <p className="text-danger">{errors.category?.message}</p>
       </div>
-      <button type="submit" className="btn btn-primary">
+      <button disabled={!isValid} type="submit" className="btn btn-primary">
         Submit
       </button>
     </form>

@@ -3,39 +3,19 @@ import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
 import ExpenseFilter from "./components/ExpenseFilter";
 import categroyList from "./categories";
+
+interface Expenses {
+  id: number;
+  description: string;
+  amount: number;
+  category: string;
+}
 function App() {
   const [categoryFilter, setCategoryFilter] = useState("");
-  const [expenses, setExpenses] = useState([
-    {
-      id: 1,
-      description: "milk",
-      amount: 10,
-      category: categroyList.find((category) => category === "Grocery") || "-",
-    },
-    {
-      id: 2,
-      description: "ice",
-      amount: 20,
-      category: categroyList.find((category) => category === "Grocery") || "-",
-    },
-    {
-      id: 3,
-      description: "wifi",
-      amount: 1000,
-      category: categroyList.find((category) => category === "Utility") || "-",
-    },
-    {
-      id: 4,
-      description: "cinema",
-      amount: 100,
-      category:
-        categroyList.find((category) => category === "Entertainment") || "-",
-    },
-  ]);
+  const [expenses, setExpenses] = useState<Expenses[]>([]);
   const filteredExpense = categoryFilter
     ? expenses.filter((expense) => expense.category === categoryFilter)
     : expenses;
-  console.log(expenses);
   return (
     <div>
       <div className="mb-5">
